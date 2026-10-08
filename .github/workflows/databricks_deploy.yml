@@ -15,8 +15,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Databricks CLI
-        # AQUI ESTÁ A CORREÇÃO: Versão atualizada para resolver o erro da chave expirada do Terraform
-        uses: databricks/setup-cli@v0.212.0
+        # AQUI ESTÁ A CORREÇÃO FINAL: Usar a ramificação principal (main) para ter as chaves mais recentes
+        uses: databricks/setup-cli@main
 
       - name: Validate Bundle
         run: databricks bundle validate
