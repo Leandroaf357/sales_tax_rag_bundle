@@ -4,7 +4,7 @@ bundle:
 targets:
   production:
     workspace:
-      host: https://<o-seu-url-databricks>.cloud.databricks.com
+      host: https://dbc-63ce2688-1ea4.cloud.databricks.com
 
 resources:
   jobs:
