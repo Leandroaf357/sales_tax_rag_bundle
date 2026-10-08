@@ -7,22 +7,25 @@ on:
 
 jobs:
   deploy:
+    name: "Deploy to Databricks"
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Databricks CLI
-        uses: databricks/setup-cli@v0.211.0
+        # AQUI ESTÁ A CORREÇÃO: Versão atualizada para resolver o erro da chave expirada do Terraform
+        uses: databricks/setup-cli@v0.212.0
 
       - name: Validate Bundle
         run: databricks bundle validate
         env:
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
 
       - name: Deploy to Production
         run: databricks bundle deploy -t production
         env:
-          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
