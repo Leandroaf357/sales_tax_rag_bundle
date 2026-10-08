@@ -13,7 +13,7 @@ resources:
       tasks:
         - task_key: setup_infra
           notebook_task:
-            notebook_path: ./src/setup/00_setup_infraconfig.sql
+            notebook_path: ./src/setup/00_setup_infraconfig.sql.ipynb
             
         - task_key: ingestao_bronze
           depends_on:
