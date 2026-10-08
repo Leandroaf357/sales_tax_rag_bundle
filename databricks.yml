@@ -1,0 +1,46 @@
+bundle:
+  name: sales_tax_rag_bundle
+
+targets:
+  production:
+    workspace:
+      host: https://<o-seu-url-databricks>.cloud.databricks.com
+
+resources:
+  jobs:
+    sales_tax_rag_job:
+      name: "Pipeline Sales Tax Allocation - Medalhao + RAG"
+      tasks:
+        - task_key: setup_infra
+          notebook_task:
+            notebook_path: ./src/setup/00_setup_infraconfig.sql
+            
+        - task_key: ingestao_bronze
+          depends_on:
+            - task_key: setup_infra
+          notebook_task:
+            notebook_path: ./src/data_pipeline/01_ingestao_bronze.py
+            
+        - task_key: limpeza_silver
+          depends_on:
+            - task_key: ingestao_bronze
+          notebook_task:
+            notebook_path: ./src/data_pipeline/02_limpeza_silver.py
+            
+        - task_key: agregacao_gold
+          depends_on:
+            - task_key: limpeza_silver
+          notebook_task:
+            notebook_path: ./src/data_pipeline/03_agregacao_gold.py
+            
+        - task_key: update_vector_index
+          depends_on:
+            - task_key: agregacao_gold
+          notebook_task:
+            notebook_path: ./src/rag_pipeline/04_chunking_embeddings.py
+            
+        - task_key: deploy_rag_model
+          depends_on:
+            - task_key: update_vector_index
+          notebook_task:
+            notebook_path: ./src/rag_pipeline/05_deploy_rag_model.py

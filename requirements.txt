@@ -1,0 +1,5 @@
+pyspark>=3.5.0
+databricks-vectorsearch
+langchain
+langchain-databricks
+mlflow 
